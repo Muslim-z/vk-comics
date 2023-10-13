@@ -1,9 +1,8 @@
 import random
-
-from dotenv import load_dotenv
-
 import os
 import requests
+
+from dotenv import load_dotenv
 
 
 def download_comic(link, path):
@@ -55,7 +54,7 @@ def save_photo(token, group_id, hash, server, photo):
     params = {
         'group_id': group_id,
         'hash': hash,
-        'server':server,
+        'server': server,
         'photo': photo,
         'access_token': token,
         'v': '5.154'
@@ -65,6 +64,7 @@ def save_photo(token, group_id, hash, server, photo):
     response.raise_for_status()
     save_response = check_response(response)
     return save_response['response']
+
 
 def post_wall_photo(token, group_id, attachments, message):
     url = 'https://api.vk.com/method/wall.post'
@@ -82,10 +82,10 @@ def post_wall_photo(token, group_id, attachments, message):
     save_response = check_response(response)
     return save_response['response']
 
+
 if __name__ == '__main__':
     link = f'https://xkcd.com/{random.randint(1, 2839)}/info.0.json'
     load_dotenv()
-    client_id = os.environ['CLIENT_ID']
     access_token = os.environ['ACCESS_TOKEN']
     group_id = os.environ['GROUP_ID']
 
@@ -105,13 +105,3 @@ if __name__ == '__main__':
     attachments = f"photo{save_photo[0]['owner_id']}_{save_photo[0]['id']}"
     post_response = post_wall_photo(access_token, group_id, attachments, message)
     os.remove('comic.png')
-
-
-
-
-# "album_id": -14,
-# "upload_url": "https://pu.vk.com...i=1&wallphoto=1",
-# "user_id": 715752416
-
-
-# https://oauth.vk.com/authorize?client_id=51753502&display=page&scope=photos,groups,wall&response_type=token&v=5.154&state=123456
