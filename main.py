@@ -90,9 +90,7 @@ if __name__ == '__main__':
     group_id = os.environ['GROUP_ID']
 
     upload_server = get_wall_upload_server(access_token, group_id)
-    album_id = upload_server['album_id']
     upload_url = upload_server['upload_url']
-    user_id = upload_server['user_id']
 
     message = download_comic(link, 'comic.png')
 
