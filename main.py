@@ -49,11 +49,11 @@ def upload_photo(path, link):
     return image
 
 
-def save_photo(token, group_id, hash, server, photo):
+def save_photo(token, group_id, hash_id, server, photo):
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
     params = {
         'group_id': group_id,
-        'hash': hash,
+        'hash': hash_id,
         'server': server,
         'photo': photo,
         'access_token': token,
