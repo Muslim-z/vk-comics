@@ -102,8 +102,8 @@ if __name__ == '__main__':
         photo_id = upl_photo['photo']
         hash_ = upl_photo['hash']
 
-        save_photo = save_photo(access_token, group_id, hash_, server_id, photo_id)
-        attachments = f"photo{save_photo[0]['owner_id']}_{save_photo[0]['id']}"
+        photo_response = photo_response(access_token, group_id, hash_, server_id, photo_id)
+        attachments = f"photo{photo_response[0]['owner_id']}_{photo_response[0]['id']}"
         post_response = post_wall_photo(access_token, group_id, attachments, message)
     except:
         print('Произошла ошибка')
