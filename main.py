@@ -84,7 +84,9 @@ def post_wall_photo(token, group_id, attachments, message):
 
 
 if __name__ == '__main__':
-    link = f'https://xkcd.com/{random.randint(1, 2839)}/info.0.json'
+    max_comic_number = 2839
+    comics_number_range = random.randint(1, max_comic_number)
+    link = f'https://xkcd.com/{comics_number_range}/info.0.json'
     load_dotenv()
     access_token = os.environ['ACCESS_TOKEN']
     group_id = os.environ['GROUP_ID']
