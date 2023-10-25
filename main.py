@@ -45,8 +45,8 @@ def upload_photo(path, link):
         }
         response = requests.post(link, files=files)
     response.raise_for_status()
-    image = response.json()
-    return image
+    image_info = response.json()
+    return image_info
 
 
 def save_photo(token, group_id, hash_id, server, photo):
