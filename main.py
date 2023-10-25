@@ -91,17 +91,21 @@ if __name__ == '__main__':
     access_token = os.environ['ACCESS_TOKEN']
     group_id = os.environ['GROUP_ID']
 
-    upload_server = get_wall_upload_server(access_token, group_id)
-    upload_url = upload_server['response']['upload_url']
+    try:
+        upload_server = get_wall_upload_server(access_token, group_id)
+        upload_url = upload_server['response']['upload_url']
 
-    message = download_comic(link, 'comic.png')
+        message = download_comic(link, 'comic.png')
 
-    upl_photo = upload_photo('comic.png', upload_url)
-    server_id = upl_photo['server']
-    photo_id = upl_photo['photo']
-    hash_ = upl_photo['hash']
+        upl_photo = upload_photo('comic.png', upload_url)
+        server_id = upl_photo['server']
+        photo_id = upl_photo['photo']
+        hash_ = upl_photo['hash']
 
-    save_photo = save_photo(access_token, group_id, hash_, server_id, photo_id)
-    attachments = f"photo{save_photo[0]['owner_id']}_{save_photo[0]['id']}"
-    post_response = post_wall_photo(access_token, group_id, attachments, message)
-    os.remove('comic.png')
+        save_photo = save_photo(access_token, group_id, hash_, server_id, photo_id)
+        attachments = f"photo{save_photo[0]['owner_id']}_{save_photo[0]['id']}"
+        post_response = post_wall_photo(access_token, group_id, attachments, message)
+    except:
+        print('Произошла ошибка')
+    finally:
+        os.remove('comic.png')
