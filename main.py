@@ -35,7 +35,7 @@ def get_wall_upload_server(token, group_id):
     vk_response = requests.get(url, params=params)
     vk_response.raise_for_status()
     upl_server = check_response(vk_response)
-    return upl_server['response']
+    return upl_server
 
 
 def upload_photo(path, link):
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     group_id = os.environ['GROUP_ID']
 
     upload_server = get_wall_upload_server(access_token, group_id)
-    upload_url = upload_server['upload_url']
+    upload_url = upload_server['response']['upload_url']
 
     message = download_comic(link, 'comic.png')
 
