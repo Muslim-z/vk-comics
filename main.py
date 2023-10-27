@@ -35,7 +35,7 @@ def get_wall_upload_server(token, group_id):
     vk_response = requests.get(url, params=params)
     vk_response.raise_for_status()
     upl_server = check_response(vk_response)
-    return upl_server
+    return upl_server['response']['upload_url']
 
 
 def upload_photo(path, link):
@@ -88,12 +88,12 @@ if __name__ == '__main__':
     comics_number_range = random.randint(1, max_comic_number)
     link = f'https://xkcd.com/{comics_number_range}/info.0.json'
     load_dotenv()
-    access_token = os.environ['ACCESS_TOKEN']
-    group_id = os.environ['GROUP_ID']
+    vk_access_token = os.environ['VK_ACCESS_TOKEN']
+    vk_group_id = os.environ['VK_GROUP_ID']
 
     try:
-        upload_server = get_wall_upload_server(access_token, group_id)
-        upload_url = upload_server['response']['upload_url']
+        upload_server = get_wall_upload_server(vk_access_token, vk_group_id)
+        upload_url = upload_server
 
         message = download_comic(link, 'comic.png')
 
@@ -102,10 +102,8 @@ if __name__ == '__main__':
         photo_id = upl_photo['photo']
         hash_ = upl_photo['hash']
 
-        photo_response = photo_response(access_token, group_id, hash_, server_id, photo_id)
+        photo_response = photo_response(vk_access_token, vk_group_id, hash_, server_id, photo_id)
         attachments = f"photo{photo_response[0]['owner_id']}_{photo_response[0]['id']}"
-        post_response = post_wall_photo(access_token, group_id, attachments, message)
-    except:
-        print('Произошла ошибка')
+        post_response = post_wall_photo(vk_access_token, vk_group_id, attachments, message)
     finally:
         os.remove('comic.png')
